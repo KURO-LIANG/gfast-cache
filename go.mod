@@ -1,4 +1,4 @@
-module github.com/KURO-LIANG/gfast-cache
+module github.com/kuro-liang/gfast-cache
 
 go 1.18
 
