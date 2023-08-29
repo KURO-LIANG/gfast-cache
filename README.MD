@@ -10,14 +10,14 @@ gf version >= v2.0.0
 ## Installation
 
 ```shell script
-go get -u github.com/tiger1103/gfast-cache
+go get github.com/KURO-LIANG/gfast-cache
 ```
 
 ## Usage
 
 ### Import
 ```go
-import "github.com/tiger1103/gfast-cache"
+import "github.com/KURO-LIANG/gfast-cache"
 ```
 
 ### Memory Cache
