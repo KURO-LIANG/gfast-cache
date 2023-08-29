@@ -36,6 +36,7 @@ type IGCache interface {
 	KeyStrings(ctx context.Context) []string
 	Values(ctx context.Context) []interface{}
 	Size(ctx context.Context) int
+	Update(ctx context.Context, key string, value interface{})
 }
 
 type GfCache struct {
@@ -166,6 +167,17 @@ func (c *GfCache) GetOrSetFuncLock(ctx context.Context, key string, f gcache.Fun
 	c.cacheTagKey(ctx, key, tag)
 	v, _ := c.cache.GetOrSetFuncLock(ctx, c.CachePrefix+key, f, duration)
 	return v
+}
+
+// Update Just update the value of key but not change the expired time
+func (c *GfCache) Update(ctx context.Context, key string, value interface{}) {
+	c.tagSetMux.Lock()
+	_, _, err := c.cache.Update(ctx, c.CachePrefix+key, value)
+	if err != nil {
+		g.Log().Error(ctx, err)
+	}
+	c.tagSetMux.Unlock()
+	return
 }
 
 // Contains returns true if <tagKey> exists in the cache, or else returns false.
